@@ -1,106 +1,49 @@
-// define your functions like this so they're testable
-// const storeHours =[
-//   {0: ['1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00','8:00','9:00','10:00']},
-//   {1: ['1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00','8:00','9:00','10:00']},
-//   {2: ['1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00','8:00','9:00','10:00']},
-//   {3: ['1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00','8:00','9:00','10:00']},
-//   {4: ['1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00','8:00','9:00','10:00']},
-//   {5: ['1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00','8:00','9:00','10:00']},
-//   {6: ['1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00','8:00','9:00','10:00']},
-// ];
-
-const storeHours = ['1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00','8:00','9:00','10:00'];
 
 
-function MonthAsString(monthIndex) {
-  let d = new Date();
-  let month = new Array();
-  month[0] = "Jan";
-  month[1] = "Feb";
-  month[2] = "Mar";
-  month[3] = "Apr";
-  month[4] = "May";
-  month[5] = "Jun";
-  month[6] = "Jul";
-  month[7] = "Aug";
-  month[8] = "Sep";
-  month[9] = "Oct";
-  month[10] = "Nov";
-  month[11] = "Dec";
+const timeSlots = [
+  '13:00',
+  '13:30',
+  '14:00',
+  '14:30',
+  '15:00',
+  '15:30',
+  '16:00',
+  '16:30',
+  '17:00',
+  '17:30',
+  '18:00',
+  '18:30',
+  '19:00',
+  '19:30',
+  '20:00',
+  '20:30',
+  '21:00',
+  '21:30',
+  '22:00',
+];
 
-  return month[monthIndex];
+const formatDate = (data) => {
+  let date = moment(data.date).format('MM/DD/YYYY');
+  return date;
 }
 
-function DayAsString(dayIndex) {
-  let weekdays = new Array(7);
-  weekdays[0] = "Sun";
-  weekdays[1] = "Mon";
-  weekdays[2] = "Tue";
-  weekdays[3] = "Wed";
-  weekdays[4] = "Thu";
-  weekdays[5] = "Fri";
-  weekdays[6] = "Sat";
+const generateTime = () => {
+  //call axios request to generate time.. but for now a dummy data...
+  // get reference to select element
+  let sel = document.getElementById('timeSlots');
 
-  return weekdays[dayIndex];
+  // create text node to add to option element (opt)
+  timeSlots.forEach((time) => {
+    let opt = document.createElement('option');
+    opt.appendChild(document.createTextNode(time));
+    opt.value = time;
+    // add opt to end of select box (sel)
+    sel.appendChild(opt);
+  })
+
 }
 
-
-//Generate Dates
-const generateDates =()=> {
-  let arrayDates = [];
-
-  for (let i = 0; i < 7; i++) {
-    let currentDate = new Date();
-    currentDate.setDate(currentDate.getDate() + i);
-    arrayDates.push(`${DayAsString(currentDate.getDay())}  ${MonthAsString(currentDate.getMonth())} ${currentDate.getDate()}`);
-  }
-  return arrayDates;
+module.exports = {
+  formatDate,
+  generateTime
 }
-
-//generate table
-function generateTableHead(table) {
-  let dates = generateDates();
-  let thead = table.createTHead();
-  let row = thead.insertRow();
-  for (let i=0; i<dates.length; i++) {
-    let th = document.createElement("th");
-    let text = document.createTextNode(dates[i]);
-    th.appendChild(text);
-    row.appendChild(th);
-  }
-  generateTable(table);
-}
-
-function generateTable(table) {
-  for (let element of storeHours) {
-    let row = table.insertRow();
-    for (let i=0; i<storeHours.length; i++) {
-      let cell = row.insertCell();
-      let text = document.createTextNode(storeHours[i]);
-      cell.appendChild(text);
-    }
-  }
-}
-
-
-
-
-
-
-
-//Toggle Page function
-
-// const displayPage = (elem) => {
-//   const home = document.getElementById('homepage');
-//   const reservations = document.getElementById('reservationspage');
-
-//   if(elem === 'reservationspage') {
-//     home.style.display = 'none';
-//     reservations.style.display = 'flex';
-//   } else {
-//     reservations.style.display = 'none';
-//     home.style.display = 'flex';
-//   }
-// };
-
-
